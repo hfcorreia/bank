@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="schedulerContextAsMap">
+            <map>
+                <entry key="notificationService" value-ref="notificationService" />
+                <entry key="notificationsToSend">
+                    <value type="java.lang.Integer">-1</value>
+                </entry>
+                <entry key="notificationSender" value-ref="notificationSender" />
+            </map>
+        </property>
+
+        <property name="triggers">
+            <list>
+                <ref bean="notificationJob"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="notificationJob" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="notificationTask" />
+        <property name="cronExpression" value="0 0/5 * * * ?" />
+    </bean>
+
+    <bean id="notificationTask" class="org.springframework.scheduling.quartz.JobDetailBean">
+        <property name="jobClass" value="pt.ulisboa.tecnico.bank.cron.NotificationJob" />
+    </bean>
+
+</beans>
