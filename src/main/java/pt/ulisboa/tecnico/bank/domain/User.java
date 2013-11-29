@@ -1,5 +1,13 @@
 package pt.ulisboa.tecnico.bank.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
@@ -8,18 +16,50 @@ import java.util.List;
  * Date: 11/29/13
  * Time: 2:34 AM
  */
+@Entity
+@Table(name = "user")
 public class User extends DomainObject{
+    @NotNull
+    @Column(name = "username")
     private String username;
+
+    @NotNull
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "enabled")
     private Boolean enabled = Boolean.TRUE;
+
+    @Column(name = "account_non_expired")
     private Boolean accountNonExpired = Boolean.TRUE;
+
+    @Column(name = "credentials_non_expired")
     private Boolean credentialsNonExpired = Boolean.TRUE;
+
+    @Column(name = "account_non_locked")
     private Boolean accountNonLocked = Boolean.TRUE;
+
+    @Size(max = 30)
+    @Column(name = "first_name")
     private String firstName;
+
+    @Size(max = 30)
+    @Column(name = "last_name")
     private String lastName;
+
+    @Size(max = 15)
+    @Column(name = "phone")
     private String phone;
-    private Role role;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Roles role;
+
+    @OneToMany
+            //(mappedBy = "user_id")
     private List<Account> accounts;
 
     public String getUsername() {
@@ -102,11 +142,11 @@ public class User extends DomainObject{
         this.phone = phone;
     }
 
-    public Role getRole() {
+    public Roles getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Roles role) {
         this.role = role;
     }
 

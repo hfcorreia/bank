@@ -3,6 +3,8 @@ package pt.ulisboa.tecnico.bank.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 /**
@@ -26,6 +28,7 @@ public class Account extends DomainObject {
     private Double balance;
 
     @Column(name = "currency")
+    @Enumerated(EnumType.STRING)
     private Currencies currency;
 
     @Column(name = "blocked")
