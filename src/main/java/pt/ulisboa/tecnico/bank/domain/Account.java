@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -18,8 +20,9 @@ import javax.persistence.Table;
 @Table(name="account")
 public class Account extends DomainObject {
 
-    @Column(name = "user_id")
-    private String owner;
+	@ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "ownerAccount", referencedColumnName="id")
+    private User owner;
 
     @Column(name = "number")
     private String number;
@@ -35,11 +38,11 @@ public class Account extends DomainObject {
     private Boolean isBlocked;
 
 
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
