@@ -11,7 +11,7 @@ import pt.ulisboa.tecnico.bank.domain.User;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicateAccountException;
 
 @Service("createAccount")
-public class CreateAccountService {
+public class AccountService {
 
 	@Autowired
 	private AccountDAO accountDAO;

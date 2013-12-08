@@ -11,7 +11,7 @@ import pt.ulisboa.tecnico.bank.exceptions.BankException;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicatedUserException;
 
 @Service("userService")
-public class CreateUserService {
+public class UserService {
 
 	@Autowired
 	private UserDAO userDAO;

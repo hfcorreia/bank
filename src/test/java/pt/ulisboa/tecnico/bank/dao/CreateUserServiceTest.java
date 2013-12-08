@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pt.ulisboa.tecnico.bank.domain.User;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicatedUserException;
-import pt.ulisboa.tecnico.bank.services.CreateUserService;
+import pt.ulisboa.tecnico.bank.services.UserService;
 import pt.ulisboa.tecnico.bank.services.NotificationService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,7 +27,7 @@ public class CreateUserServiceTest {
 	private static String PASSWORD = "e12d12312d21";
 
 	@Autowired
-	private CreateUserService createUserSerivice;
+	private UserService createUserSerivice;
 	
 	@Test
 	@Transactional
