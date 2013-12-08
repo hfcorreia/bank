@@ -56,6 +56,7 @@ public class User extends DomainObject{
     @Column(name = "phone")
     private String phone;
 
+    @NotNull
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Roles role;

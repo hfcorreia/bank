@@ -14,17 +14,9 @@ public interface UserDAO extends DAO<User> {
 
     public User getUserByUserName (String userName);
 
-    public List<User> getUsersByRoleName(String roleName);
+    public boolean checkUsernameExistence(String userName);
+    
+    public User createUser(User user);
+  
 
-    public Long sizeByRoleName(String roleName);
-
-    public boolean contains (String email);
-
-    public List<User> listByRoleName(int first, int count, String roleName);
-
-    public boolean checkUsernameExistence(String userName, Long userId);
-
-    public boolean checkEmailExistence(String email, Long userId);
-
-    public void evict(User user);
 }
