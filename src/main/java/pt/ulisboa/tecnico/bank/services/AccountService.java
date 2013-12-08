@@ -65,4 +65,10 @@ public class AccountService {
 		
 		accountDAO.update(account);
 	}
+	
+	@Transactional
+	public void transfer(String fromAccount, String toAccount, Double amount) throws BankException {
+		withdraw(fromAccount, amount);
+		deposit(toAccount, amount);
+	}
 }

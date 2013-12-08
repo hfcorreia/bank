@@ -12,7 +12,6 @@ import java.util.List;
  * Time: 3:07 AM
  */
 public interface AccountDAO extends DAO<Account> {
-	
 	 public Account getAccount (String accountName);
 
 	 public User getAccountOwner (String accountName);

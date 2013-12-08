@@ -38,6 +38,7 @@ public class AccountServiceTest {
 	private static final String USER_NAME = "John Doe";
 	private static final String PASSWORD = "e12d12312d21";
 	private static final Double BALANCE = 200.00;
+	private static final String ACCOUNT_NUM2 = "0002";
 	
 
 	@Autowired
@@ -111,6 +112,21 @@ public class AccountServiceTest {
 		
 		Double amount = -201.2;
 		accountService.deposit(ACCOUNT_NUM, amount);
+		
+	}
+	
+	@Test
+	@Transactional
+	@Rollback(true)
+	public void testTransfer() throws BankException {
+		User user = userService.createNormalUser(USER_NAME, PASSWORD);
+		Account accountFrom = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
+		Account accountTo = accountService.createNewAccount(user, ACCOUNT_NUM2, 0.0);
+		Double amount = 100.00;
+		accountService.transfer(ACCOUNT_NUM, ACCOUNT_NUM2, amount);
+		
+		assertEquals( new Double(BALANCE - amount), accountDAO.getAccount(ACCOUNT_NUM).getBalance());
+		assertEquals( new Double(amount), accountDAO.getAccount(ACCOUNT_NUM2).getBalance());
 		
 	}
 
