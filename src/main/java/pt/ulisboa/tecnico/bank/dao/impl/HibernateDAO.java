@@ -22,7 +22,7 @@ public class HibernateDAO<T extends DomainObject> implements DAO<T> {
     private Class<T> _class;
     private static Logger log = Logger.getLogger(HibernateDAO.class);
     @Autowired
-    private SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

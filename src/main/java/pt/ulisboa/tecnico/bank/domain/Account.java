@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,20 +21,25 @@ import javax.persistence.Table;
 @Table(name="account")
 public class Account extends DomainObject {
 
+	@NotNull
 	@ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "ownerAccount", referencedColumnName="id")
     private User owner;
 
+	@NotNull
     @Column(name = "number")
     private String number;
 
+	@NotNull
     @Column(name = "balance")
     private Double balance;
 
+	@NotNull
     @Column(name = "currency")
     @Enumerated(EnumType.STRING)
     private Currencies currency;
 
+	@NotNull
     @Column(name = "blocked")
     private Boolean isBlocked;
 
