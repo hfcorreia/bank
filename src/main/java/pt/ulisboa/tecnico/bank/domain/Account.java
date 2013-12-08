@@ -27,7 +27,7 @@ public class Account extends DomainObject {
     private User owner;
 
 	@NotNull
-    @Column(name = "number")
+    @Column(name = "number", unique=true)
     private String number;
 
 	@NotNull

@@ -1,4 +1,4 @@
-package pt.ulisboa.tecnico.bank.dao;
+package pt.ulisboa.tecnico.bank.service;
 
 import static org.junit.Assert.*;
 
