@@ -18,8 +18,8 @@ import pt.ulisboa.tecnico.bank.domain.Account;
 import pt.ulisboa.tecnico.bank.domain.User;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicateAccountException;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicatedUserException;
-import pt.ulisboa.tecnico.bank.services.CreateAccountService;
-import pt.ulisboa.tecnico.bank.services.CreateUserService;
+import pt.ulisboa.tecnico.bank.services.AccountService;
+import pt.ulisboa.tecnico.bank.services.UserService;
 import pt.ulisboa.tecnico.bank.services.NotificationService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -33,9 +33,9 @@ public class CreateAccountServiceTest {
 	private static String PASSWORD = "e12d12312d21";
 
 	@Autowired
-	private CreateUserService createUserSerivice;
+	private UserService createUserSerivice;
 	@Autowired
-	private CreateAccountService createAccountService;
+	private AccountService createAccountService;
 	
 	
 	@Test
