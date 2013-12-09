@@ -18,9 +18,8 @@
     <import resource="classpath:/spring-mailing.xml"/>
     <import resource="classpath:/spring-logging.xml" />
     <import resource="classpath:/spring-cron.xml" />
-    <!--
-    <import resource="classpath:/spring-mvc.xml" />
-    <import resource="classpath:/spring-security.xml" />
+    <import resource="classpath:/spring-mvc.xml" /> <!-- 
+     <import resource="classpath:/spring-security.xml" />
 
 
     <import resource="classpath:/spring-aop.xml" />-->
