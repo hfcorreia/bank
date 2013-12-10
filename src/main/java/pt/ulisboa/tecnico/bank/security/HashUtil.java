@@ -4,9 +4,11 @@ import com.sun.crypto.provider.PBKDF2HmacSHA1Factory;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +24,14 @@ public class HashUtil {
         byte[] saltBytes = salt.getBytes();
         PBEKeySpec spec = new PBEKeySpec(psswChars, saltBytes, numIter, 512);
         try {
-            SecretKeyFactory skfactory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+            SecretKeyFactory skfactory = null;
+            try {
+                Properties prop = new Properties();
+                prop.load(HashUtil.class.getClassLoader().getResourceAsStream("wiring.properties"));
+                skfactory = SecretKeyFactory.getInstance(prop.getProperty("security.HASHAlgorithm"));
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
             byte[] hash = skfactory.generateSecret(spec).getEncoded();
             return toHex(hash);
         } catch (NoSuchAlgorithmException e) {
