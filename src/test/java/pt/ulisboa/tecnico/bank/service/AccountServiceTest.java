@@ -37,6 +37,8 @@ public class AccountServiceTest {
 	private static final String ACCOUNT_NUM = "0001";
 	private static final String USER_NAME = "John Doe";
 	private static final String PASSWORD = "e12d12312d21";
+    private static final String SALT = "salty";
+    private static final String ITERATIONS = "10000";
 	private static final Double BALANCE = 200.00;
 	private static final String ACCOUNT_NUM2 = "0002";
 	
@@ -55,7 +57,7 @@ public class AccountServiceTest {
 	@Transactional
     @Rollback(true)
 	public void testNormalAccountCreation() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
 		Account account = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		
 		assertEquals(account.getOwner().getUsername(), USER_NAME);
@@ -67,7 +69,7 @@ public class AccountServiceTest {
 	@Transactional
 	@Rollback(true)
 	public void testNormalWithdraw() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
 		Account account = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		
 		Double amount = 30.21;
@@ -81,7 +83,7 @@ public class AccountServiceTest {
 	@Transactional
 	@Rollback(true)
 	public void testInsufficienttWithdraw() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
 		Account account = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		
 		Double amount = 390.21;
@@ -94,7 +96,7 @@ public class AccountServiceTest {
 	@Transactional
 	@Rollback(true)
 	public void testNormalDeposit() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
 		Account account = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		
 		Double amount = 201.2;
@@ -107,7 +109,7 @@ public class AccountServiceTest {
 	@Transactional
 	@Rollback(true)
 	public void testInvalidDeposit() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
 		Account account = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		
 		Double amount = -201.2;
@@ -119,7 +121,7 @@ public class AccountServiceTest {
 	@Transactional
 	@Rollback(true)
 	public void testTransfer() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
 		Account accountFrom = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		Account accountTo = accountService.createNewAccount(user, ACCOUNT_NUM2, 0.0);
 		Double amount = 100.00;

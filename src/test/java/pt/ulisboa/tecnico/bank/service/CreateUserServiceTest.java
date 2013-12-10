@@ -25,6 +25,8 @@ public class CreateUserServiceTest {
 	private static final String ADMIN = "ADMIN";
 	private static String USER_NAME = "John Doe";
 	private static String PASSWORD = "e12d12312d21";
+    private static final String SALT = "salty";
+    private static final String ITERATIONS = "10000";
 
 	@Autowired
 	private UserService createUserSerivice;
@@ -33,25 +35,25 @@ public class CreateUserServiceTest {
 	@Transactional
     @Rollback(true)
 	public void testNormalUserCreation() throws DuplicatedUserException {
-		User user = createUserSerivice.createNormalUser(USER_NAME, PASSWORD);
+		User user = createUserSerivice.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
 		assertEquals(USER_NAME, user.getUsername());
-		assertEquals(PASSWORD, user.getPassword());
+		assertEquals(PASSWORD, user.getPasswordHash());
 	}
 	
 	@Test
 	@Transactional
     @Rollback(true)
 	public void testUserCreationFail() throws DuplicatedUserException {
-		User user = createUserSerivice.createAdminUser(ADMIN, PASSWORD);
+		User user = createUserSerivice.createAdminUser(ADMIN, PASSWORD, SALT, ITERATIONS);
 		assertEquals(ADMIN, user.getUsername());
-		assertEquals(PASSWORD, user.getPassword());
+		assertEquals(PASSWORD, user.getPasswordHash());
 	}
 
 	@Test(expected = DuplicatedUserException.class)
 	@Transactional
     @Rollback(true)
 	public void testUser() throws DuplicatedUserException {
-		createUserSerivice.createAdminUser(ADMIN, PASSWORD);
-		createUserSerivice.createAdminUser(ADMIN, PASSWORD);
+		createUserSerivice.createAdminUser(ADMIN, PASSWORD, SALT, ITERATIONS);
+		createUserSerivice.createAdminUser(ADMIN, PASSWORD, SALT, ITERATIONS);
 	}
 }

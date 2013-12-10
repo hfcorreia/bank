@@ -17,11 +17,13 @@ public class UserService {
 	private UserDAO userDAO;
 
 	@Transactional
-	public User createNormalUser(String username, String password) throws DuplicatedUserException {
+	public User createNormalUser(String username, String password, String salt, String iterations) throws DuplicatedUserException {
 		User user = new User();
 		user.setUsername(username);
-		user.setPassword(password);
+		user.setPasswordHash(password);
 		user.setRole(Roles.USER);
+        user.setSalt(salt);
+        user.setIterations(iterations);
 		
 		user = userDAO.createUser(user);
 		if ( user != null ) 
@@ -30,11 +32,13 @@ public class UserService {
 	}
 
 	@Transactional
-	public User createAdminUser(String username, String password) throws DuplicatedUserException {
+	public User createAdminUser(String username, String password, String salt, String iterations) throws DuplicatedUserException {
 		User user = new User();
 		user.setUsername(username);
-		user.setPassword(password);
+		user.setPasswordHash(password);
 		user.setRole(Roles.ADMIN);
+        user.setSalt(salt);
+        user.setIterations(iterations);
 		
 		user = userDAO.createUser(user);
 		if ( user != null ) 

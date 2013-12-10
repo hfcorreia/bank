@@ -26,8 +26,16 @@ public class User extends DomainObject{
     private String username;
 
     @NotNull
-    @Column(name = "password")
-    private String password;
+    @Column(name = "password_hash")
+    private String passwordHash;
+
+    @NotNull
+    @Column(name = "salt")
+    private String salt;
+
+    @NotNull
+    @Column(name = "iterations")
+    private String iterations;
 
     @Column(name = "email")
     private String email;
@@ -73,12 +81,28 @@ public class User extends DomainObject{
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswordHash() {
+        return passwordHash;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getIterations() {
+        return iterations;
+    }
+
+    public void setIterations(String iterations) {
+        this.iterations = iterations;
     }
 
     public String getEmail() {
