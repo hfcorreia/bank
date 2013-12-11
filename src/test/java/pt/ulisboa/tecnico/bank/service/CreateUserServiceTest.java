@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.test.annotation.ExpectedException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -30,6 +31,7 @@ public class CreateUserServiceTest {
 
 	@Autowired
 	private UserService createUserSerivice;
+    private StandardPasswordEncoder encoder = new StandardPasswordEncoder();
 	
 	@Test
 	@Transactional
@@ -37,16 +39,16 @@ public class CreateUserServiceTest {
 	public void testNormalUserCreation() throws DuplicatedUserException {
 		User user = createUserSerivice.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
 		assertEquals(USER_NAME, user.getUsername());
-		assertEquals(PASSWORD, user.getPasswordHash());
+		assertTrue(encoder.matches(PASSWORD, user.getPassword()));
 	}
 	
-	@Test
+	@Test(expected = DuplicatedUserException.class)
 	@Transactional
     @Rollback(true)
 	public void testUserCreationFail() throws DuplicatedUserException {
 		User user = createUserSerivice.createAdminUser(ADMIN, PASSWORD, SALT, ITERATIONS);
 		assertEquals(ADMIN, user.getUsername());
-		assertEquals(PASSWORD, user.getPasswordHash());
+		assertTrue(encoder.matches(PASSWORD, user.getPassword()));
 	}
 
 	@Test(expected = DuplicatedUserException.class)

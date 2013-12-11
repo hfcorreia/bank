@@ -1,10 +1,12 @@
 package pt.ulisboa.tecnico.bank.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pt.ulisboa.tecnico.bank.dao.UserDAO;
+import pt.ulisboa.tecnico.bank.domain.Role;
 import pt.ulisboa.tecnico.bank.domain.Roles;
 import pt.ulisboa.tecnico.bank.domain.User;
 import pt.ulisboa.tecnico.bank.exceptions.BankException;
@@ -15,13 +17,16 @@ public class UserService {
 
 	@Autowired
 	private UserDAO userDAO;
+    private StandardPasswordEncoder encoder = new StandardPasswordEncoder();
 
 	@Transactional
 	public User createNormalUser(String username, String password, String salt, String iterations) throws DuplicatedUserException {
 		User user = new User();
+        Role role = new Role();
+        role.setName(Roles.USER.name());
 		user.setUsername(username);
-		user.setPasswordHash(password);
-		user.setRole(Roles.USER);
+		user.setPassword(encoder.encode(password));
+		user.setRole(role);
         user.setSalt(salt);
         user.setIterations(iterations);
 		
@@ -34,9 +39,11 @@ public class UserService {
 	@Transactional
 	public User createAdminUser(String username, String password, String salt, String iterations) throws DuplicatedUserException {
 		User user = new User();
+        Role role = new Role();
+        role.setName(Roles.ADMINISTRATOR.name());
 		user.setUsername(username);
-		user.setPasswordHash(password);
-		user.setRole(Roles.ADMIN);
+		user.setPassword(encoder.encode(password));
+		user.setRole(role);
         user.setSalt(salt);
         user.setIterations(iterations);
 		

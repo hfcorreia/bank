@@ -7,18 +7,23 @@
 		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
 
-    <http auto-config="true">
-        <intercept-url pattern="/welcome*" access="ROLE_USER" />
+    <http auto-config="true" use-expressions="true">
         <form-login login-page="/login" default-target-url="/welcome"
                     authentication-failure-url="/loginfailed" />
         <logout logout-success-url="/logout" />
+        <intercept-url pattern="/welcome" access="hasAnyRole('USER', 'ADMINISTRATOR')" />
+        <intercept-url pattern="/users*" access="hasRole('ADMINISTRATOR')" />
+        <intercept-url pattern="/transfer*" access="hasRole('USER')" />
     </http>
 
+    <beans:bean id="encoder"
+                class="org.springframework.security.crypto.password.StandardPasswordEncoder">
+    </beans:bean>
+
+
     <authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="mkyong" password="123456" authorities="ROLE_USER" />
-            </user-service>
+        <authentication-provider user-service-ref="userDetailsService">
+            <password-encoder ref="encoder" />
         </authentication-provider>
     </authentication-manager>
 
