@@ -20,9 +20,7 @@
     <import resource="classpath:/spring-cron.xml" />
     <import resource="classpath:/spring-mvc.xml" />
     <import resource="classpath:/spring-security.xml" />
-
-
-    <!--<import resource="classpath:/spring-aop.xml" />-->
-    <!--<bean name="initializer" class="bank.Launcher" />-->
+    <import resource="classpath:/spring-aop.xml" />
+    <bean name="initializer" class="pt.ulisboa.tecnico.bank.Launcher" />
 
 </beans>
