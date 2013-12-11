@@ -38,6 +38,11 @@ public class AccountService {
 	}
 	
 	@Transactional
+	public boolean checkAccountExistence(String accountNumber){
+		return accountDAO.checkAccountExistence(accountNumber);
+	}
+	
+	@Transactional
 	public void withdraw(String accountNumber, Double amount)   throws BankException {
 		Account account = accountDAO.getAccount(accountNumber);
 		
