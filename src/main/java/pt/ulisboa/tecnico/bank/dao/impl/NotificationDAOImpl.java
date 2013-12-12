@@ -1,6 +1,7 @@
 package pt.ulisboa.tecnico.bank.dao.impl;
 
 import org.springframework.stereotype.Repository;
+
 import pt.ulisboa.tecnico.bank.dao.NotificationDAO;
 import pt.ulisboa.tecnico.bank.domain.Notification;
 

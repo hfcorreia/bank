@@ -1,10 +1,11 @@
 package pt.ulisboa.tecnico.bank.services;
 
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 
 import pt.ulisboa.tecnico.bank.dao.AccountDAO;
 import pt.ulisboa.tecnico.bank.domain.Account;
@@ -12,9 +13,10 @@ import pt.ulisboa.tecnico.bank.domain.Currencies;
 import pt.ulisboa.tecnico.bank.domain.User;
 import pt.ulisboa.tecnico.bank.exceptions.BankException;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicateAccountException;
+import pt.ulisboa.tecnico.bank.exceptions.InsufficientFundsException;
 import pt.ulisboa.tecnico.bank.exceptions.InvalidDepositAmountExcepiton;
 import pt.ulisboa.tecnico.bank.exceptions.NoSuchAccountException;
-import pt.ulisboa.tecnico.bank.exceptions.InsufficientFundsException;
+import pt.ulisboa.tecnico.bank.security.SecurityMatrixUtil;
 
 @Service("createAccount")
 public class AccountService {
@@ -77,5 +79,19 @@ public class AccountService {
 	public void transfer(String fromAccount, String toAccount, Double amount) throws BankException {
 		withdraw(fromAccount, amount);
 		deposit(toAccount, amount);
+	}
+
+	@Transactional
+	public int checkMatrixInput(String accountName, String row, int col,
+			int number) {
+		Account account = accountDAO.getAccount(accountName);
+		SecurityMatrixUtil util = new SecurityMatrixUtil(0);
+
+		TreeMap<String, ArrayList<Integer>> map = util.generateFromJSON(account
+				.getOwner().getMatrix());
+
+		String result = map.get(row).get(col) + "";
+		return Integer.parseInt(result.charAt(number) + "");
+
 	}
 }

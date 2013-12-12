@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.bank.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -10,10 +12,7 @@ import pt.ulisboa.tecnico.bank.domain.Account;
 import pt.ulisboa.tecnico.bank.domain.Role;
 import pt.ulisboa.tecnico.bank.domain.Roles;
 import pt.ulisboa.tecnico.bank.domain.User;
-import pt.ulisboa.tecnico.bank.exceptions.BankException;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicatedUserException;
-
-import java.util.List;
 
 @Service("userService")
 public class UserService {
@@ -23,7 +22,7 @@ public class UserService {
     private StandardPasswordEncoder encoder = new StandardPasswordEncoder();
 
 	@Transactional
-	public User createNormalUser(String username, String password, String salt, String iterations) throws DuplicatedUserException {
+	public User createNormalUser(String username, String password, String salt, String iterations, String matrix) throws DuplicatedUserException {
 		User user = new User();
         Role role = new Role();
         role.setName(Roles.USER.name());
@@ -32,6 +31,7 @@ public class UserService {
 		user.setRole(role);
         user.setSalt(salt);
         user.setIterations(iterations);
+        user.setMatrix(matrix);
 		
 		user = userDAO.createUser(user);
 		if ( user != null ) 
@@ -40,7 +40,7 @@ public class UserService {
 	}
 
 	@Transactional
-	public User createAdminUser(String username, String password, String salt, String iterations) throws DuplicatedUserException {
+	public User createAdminUser(String username, String password, String salt, String iterations, String matrix) throws DuplicatedUserException {
 		User user = new User();
         Role role = new Role();
         role.setName(Roles.ADMINISTRATOR.name());
@@ -49,6 +49,7 @@ public class UserService {
 		user.setRole(role);
         user.setSalt(salt);
         user.setIterations(iterations);
+        user.setMatrix(matrix);
 		
 		user = userDAO.createUser(user);
 		if ( user != null ) 

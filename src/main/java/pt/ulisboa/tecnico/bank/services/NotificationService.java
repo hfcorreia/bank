@@ -1,12 +1,13 @@
 package pt.ulisboa.tecnico.bank.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import pt.ulisboa.tecnico.bank.dao.NotificationDAO;
 import pt.ulisboa.tecnico.bank.domain.Notification;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

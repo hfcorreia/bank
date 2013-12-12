@@ -1,12 +1,12 @@
 package pt.ulisboa.tecnico.bank.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
-import org.springframework.test.annotation.ExpectedException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import pt.ulisboa.tecnico.bank.domain.User;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicatedUserException;
+import pt.ulisboa.tecnico.bank.security.SecurityMatrixUtil;
 import pt.ulisboa.tecnico.bank.services.UserService;
-import pt.ulisboa.tecnico.bank.services.NotificationService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath*:spring-application-context.xml"})
@@ -28,6 +28,7 @@ public class CreateUserServiceTest {
 	private static String PASSWORD = "e12d12312d21";
     private static final String SALT = "salty";
     private static final String ITERATIONS = "10000";
+    private static final String MATRIX = new SecurityMatrixUtil(1000).generateJSON();
 
 	@Autowired
 	private UserService createUserSerivice;
@@ -37,7 +38,7 @@ public class CreateUserServiceTest {
 	@Transactional
     @Rollback(true)
 	public void testNormalUserCreation() throws DuplicatedUserException {
-		User user = createUserSerivice.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
+		User user = createUserSerivice.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS, MATRIX);
 		assertEquals(USER_NAME, user.getUsername());
 		assertTrue(encoder.matches(PASSWORD, user.getPassword()));
 	}
@@ -46,7 +47,7 @@ public class CreateUserServiceTest {
 	@Transactional
     @Rollback(true)
 	public void testUserCreationFail() throws DuplicatedUserException {
-		User user = createUserSerivice.createAdminUser(ADMIN, PASSWORD, SALT, ITERATIONS);
+		User user = createUserSerivice.createAdminUser(ADMIN, PASSWORD, SALT, ITERATIONS, MATRIX);
 		assertEquals(ADMIN, user.getUsername());
 		assertTrue(encoder.matches(PASSWORD, user.getPassword()));
 	}
@@ -55,7 +56,7 @@ public class CreateUserServiceTest {
 	@Transactional
     @Rollback(true)
 	public void testUser() throws DuplicatedUserException {
-		createUserSerivice.createAdminUser(ADMIN, PASSWORD, SALT, ITERATIONS);
-		createUserSerivice.createAdminUser(ADMIN, PASSWORD, SALT, ITERATIONS);
+		createUserSerivice.createAdminUser(ADMIN, PASSWORD, SALT, ITERATIONS, MATRIX);
+		createUserSerivice.createAdminUser(ADMIN, PASSWORD, SALT, ITERATIONS, MATRIX);
 	}
 }

@@ -1,14 +1,13 @@
 package pt.ulisboa.tecnico.bank.security;
 
-import com.sun.crypto.provider.PBKDF2HmacSHA1Factory;
-
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Properties;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 /**
  * Created with IntelliJ IDEA.
