@@ -8,19 +8,35 @@
 
 
     <http auto-config="true" use-expressions="true">
-        <form-login login-page="/login" default-target-url="/welcome"
+        <form-login login-page="/login"
+                    default-target-url="/welcome"
                     authentication-failure-url="/loginfailed" />
+
         <logout logout-success-url="/logout" />
-        <intercept-url pattern="/login" requires-channel="https" />
+        <!--<intercept-url pattern="/login" requires-channel="https" />-->
         <intercept-url pattern="/welcome" access="hasAnyRole('USER', 'ADMINISTRATOR')" />
         <intercept-url pattern="/users*" access="hasRole('ADMINISTRATOR')" />
         <intercept-url pattern="/transfer*" access="hasRole('USER')" />
+        <custom-filter ref="captchaCaptureFilter" before="FORM_LOGIN_FILTER"/>
+        <custom-filter ref="captchaVerifierFilter" after="FORM_LOGIN_FILTER"/>
     </http>
 
     <beans:bean id="encoder"
                 class="org.springframework.security.crypto.password.StandardPasswordEncoder">
     </beans:bean>
 
+    <!-- For capturing CAPTCHA fields -->
+    <beans:bean id="captchaCaptureFilter" class="pt.ulisboa.tecnico.bank.security.CaptchaCaptureFilter" />
+
+    <!-- For verifying CAPTCHA fields -->
+    <!-- Private key is assigned by the reCATPCHA service -->
+    <beans:bean id="captchaVerifierFilter" class="pt.ulisboa.tecnico.bank.security.CaptchaVerifierFilter"
+          p:useProxy="false"
+          p:proxyPort=""
+          p:proxyHost=""
+          p:failureUrl="/loginfailed"
+          p:captchaCaptureFilter-ref="captchaCaptureFilter"
+          p:privateKey="6LfCqOsSAAAAAN7_zHT3mPU_zd0hkcBJI9CG7zux"/>
 
     <authentication-manager>
         <authentication-provider user-service-ref="userDetailsService">
