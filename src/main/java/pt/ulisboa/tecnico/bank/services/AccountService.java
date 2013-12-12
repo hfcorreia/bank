@@ -24,6 +24,8 @@ public class AccountService {
 	
 	@Transactional
 	public Account createNewAccount(User user, String accountNumber, Double balance) throws BankException {
+        if(balance < 0)
+            throw new InsufficientFundsException(accountNumber);
 		Account account = new Account();
 		account.setBalance(balance);
 		account.setBlocked(false);
