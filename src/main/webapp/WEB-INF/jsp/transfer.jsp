@@ -1,4 +1,7 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
 <html>
 <head>
 <title>Transfer Page</title>
@@ -16,24 +19,32 @@
 <h2>Transfer Money</h2>
 <c:if test="${not empty error}">
 		<div class="errorblock">
-			<h1>Error Transferring money</h1>
+			<h1>Error ${errorMSG}</h1>
 		</div>
-	</c:if>
+</c:if>
 <form method="post" action="<c:url value='/transfer/submit' />" >
    
     <table>
     <tr>
-        <td><label path="accountNumber">Account Number</label></td>
-        <td><input path="accountNumber" type="text" size="10" /></td> 
+        <td><label>Account Number</label></td>
+        <td><input name="accountNumber" type="text" size="10" /></td> 
     </tr>
     <tr>
-        <td><label path="accountNumber2">Account Number to Transfer</label></td>
-        <td><input path="accountNumber2" type="text" size="10"  /></td> 
+        <td><label>Account Number to Transfer</label></td>
+        <td><input name="accountNumber2" type="text" size="10"  /></td> 
     </tr>
     <tr>
-        <td><label path="amount">Amount</label></td>
-        <td><input path="amount" type="text" size ="10"/></td>
+        <td><label>Amount</label></td>
+        <td><input name="amount" type="text" size ="10"/></td>
     </tr> 
+     <tr>
+        <td><label>${ROW1}${COL1} Number: ${NUM1}</label></td>
+        <td><input name="matrix1" type="password" size="1" /></td> 
+    </tr>
+    <tr>
+        <td><label>${ROW2}${COL2} Number: ${NUM2}</label></td>
+        <td><input name="matrix2" type="password" size="1"  /></td> 
+    </tr>
     <tr> 
         <td>
         	<input type="submit" value="submit"/>

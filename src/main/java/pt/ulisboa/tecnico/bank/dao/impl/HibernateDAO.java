@@ -1,5 +1,7 @@
 package pt.ulisboa.tecnico.bank.dao.impl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -7,10 +9,9 @@ import org.hibernate.classic.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import pt.ulisboa.tecnico.bank.dao.DAO;
 import pt.ulisboa.tecnico.bank.domain.DomainObject;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

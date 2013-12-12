@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
 import pt.ulisboa.tecnico.bank.dao.UserDAO;
 import pt.ulisboa.tecnico.bank.domain.User;
 

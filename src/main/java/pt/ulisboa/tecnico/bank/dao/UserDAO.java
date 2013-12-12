@@ -1,9 +1,9 @@
 package pt.ulisboa.tecnico.bank.dao;
 
+import java.util.List;
+
 import pt.ulisboa.tecnico.bank.domain.Account;
 import pt.ulisboa.tecnico.bank.domain.User;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

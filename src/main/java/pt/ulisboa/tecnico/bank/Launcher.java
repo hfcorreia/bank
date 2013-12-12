@@ -1,16 +1,27 @@
 package pt.ulisboa.tecnico.bank;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.TreeMap;
+
+import javax.annotation.PostConstruct;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import pt.ulisboa.tecnico.bank.domain.Account;
-import pt.ulisboa.tecnico.bank.domain.Roles;
+
 import pt.ulisboa.tecnico.bank.domain.User;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicatedUserException;
+import pt.ulisboa.tecnico.bank.security.SecurityMatrixUtil;
 import pt.ulisboa.tecnico.bank.services.AccountService;
 import pt.ulisboa.tecnico.bank.services.UserService;
-
-import javax.annotation.PostConstruct;
 
 /**
  * Created with IntelliJ IDEA.
@@ -49,12 +60,21 @@ public class Launcher {
     private String user_iterations;
 
     @PostConstruct
-    public void init(){
+    public void init() throws IOException{
+    	SecurityMatrixUtil matrixUtil = new SecurityMatrixUtil(1231231);
+    	TreeMap<String, ArrayList<Integer>> userMatrix = matrixUtil.generateMatrix();
+    	
+    	SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
+    	File file = File.createTempFile("matrix " + " " + user_name, "end " + format.format(new Date()));
+    	Writer writer = new BufferedWriter( new OutputStreamWriter ( new FileOutputStream(file), "utf-8"));
+    	writer.write(matrixUtil.print(userMatrix));
+    	writer.close();
+    	
         try{
-            User administrator = userService.createAdminUser(admin_name, admin_password, admin_salt, admin_iterations);
-            User user = userService.createNormalUser(user_name, user_password, user_salt, user_iterations);
-            Account account1 = accountService.createNewAccount(user, "PT12345", 200.0);
-            Account account2 = accountService.createNewAccount(user, "PT23456", 1248.35);
+            User administrator = userService.createAdminUser(admin_name, admin_password, admin_salt, admin_iterations, matrixUtil.generateJSON(matrixUtil.generateMatrix()));
+            User user = userService.createNormalUser(user_name, user_password, user_salt, user_iterations, matrixUtil.generateJSON(userMatrix));
+            accountService.createNewAccount(user, "PT1001", 1000.0);
+            accountService.createNewAccount(user, "PT1002", 1248.55);
         }
         catch (DuplicatedUserException e){
             logger.error(e);

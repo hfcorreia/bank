@@ -1,19 +1,18 @@
 package pt.ulisboa.tecnico.bank.security;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.apache.log4j.Logger;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.prefs.Preferences;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+
+import org.apache.log4j.Logger;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created with IntelliJ IDEA.

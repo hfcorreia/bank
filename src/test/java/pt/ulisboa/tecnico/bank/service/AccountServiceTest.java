@@ -1,32 +1,25 @@
 package pt.ulisboa.tecnico.bank.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.ExpectedException;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 
 import pt.ulisboa.tecnico.bank.dao.AccountDAO;
 import pt.ulisboa.tecnico.bank.domain.Account;
 import pt.ulisboa.tecnico.bank.domain.User;
 import pt.ulisboa.tecnico.bank.exceptions.BankException;
-import pt.ulisboa.tecnico.bank.exceptions.DuplicateAccountException;
-import pt.ulisboa.tecnico.bank.exceptions.DuplicatedUserException;
 import pt.ulisboa.tecnico.bank.exceptions.InsufficientFundsException;
 import pt.ulisboa.tecnico.bank.exceptions.InvalidDepositAmountExcepiton;
+import pt.ulisboa.tecnico.bank.security.SecurityMatrixUtil;
 import pt.ulisboa.tecnico.bank.services.AccountService;
 import pt.ulisboa.tecnico.bank.services.UserService;
-import pt.ulisboa.tecnico.bank.services.NotificationService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath*:spring-application-context.xml"})
@@ -41,7 +34,7 @@ public class AccountServiceTest {
     private static final String ITERATIONS = "10000";
 	private static final Double BALANCE = 200.00;
 	private static final String ACCOUNT_NUM2 = "0002";
-	
+	private static final String MATRIX = new SecurityMatrixUtil(1000).generateJSON();
 
 	@Autowired
 	private UserService userService;
@@ -50,14 +43,11 @@ public class AccountServiceTest {
 	@Autowired
 	private AccountDAO accountDAO;
 	
-	
-	
-	
 	@Test
 	@Transactional
     @Rollback(true)
 	public void testNormalAccountCreation() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS, MATRIX);
 		Account account = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		
 		assertEquals(account.getOwner().getUsername(), USER_NAME);
@@ -69,7 +59,7 @@ public class AccountServiceTest {
 	@Transactional
 	@Rollback(true)
 	public void testNormalWithdraw() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS, MATRIX);
 		Account account = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		
 		Double amount = 30.21;
@@ -83,7 +73,7 @@ public class AccountServiceTest {
 	@Transactional
 	@Rollback(true)
 	public void testInsufficienttWithdraw() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS, MATRIX);
 		Account account = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		
 		Double amount = 390.21;
@@ -96,7 +86,7 @@ public class AccountServiceTest {
 	@Transactional
 	@Rollback(true)
 	public void testNormalDeposit() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS, MATRIX);
 		Account account = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		
 		Double amount = 201.2;
@@ -109,7 +99,7 @@ public class AccountServiceTest {
 	@Transactional
 	@Rollback(true)
 	public void testInvalidDeposit() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS, MATRIX);
 		Account account = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		
 		Double amount = -201.2;
@@ -121,7 +111,7 @@ public class AccountServiceTest {
 	@Transactional
 	@Rollback(true)
 	public void testTransfer() throws BankException {
-		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS);
+		User user = userService.createNormalUser(USER_NAME, PASSWORD, SALT, ITERATIONS, MATRIX);
 		Account accountFrom = accountService.createNewAccount(user, ACCOUNT_NUM, BALANCE);
 		Account accountTo = accountService.createNewAccount(user, ACCOUNT_NUM2, 0.0);
 		Double amount = 100.00;
