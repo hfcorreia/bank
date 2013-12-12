@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import pt.ulisboa.tecnico.bank.dao.UserDAO;
+import pt.ulisboa.tecnico.bank.domain.Account;
 import pt.ulisboa.tecnico.bank.domain.Role;
 import pt.ulisboa.tecnico.bank.domain.Roles;
 import pt.ulisboa.tecnico.bank.domain.User;
@@ -58,5 +59,10 @@ public class UserService {
     @Transactional
     public List<User> getAllUsers() {
         return userDAO.getAllUsers();
+    }
+
+    @Transactional
+    public List<Account> getUserAccounts(String username) {
+        return userDAO.getUserAccounts(username);
     }
 }
