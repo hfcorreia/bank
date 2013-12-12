@@ -1,10 +1,13 @@
 package pt.ulisboa.tecnico.bank.controllers;
 
+
 import org.springframework.stereotype.Controller;
 import java.security.Principal;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class HomeController {
@@ -14,22 +17,23 @@ public class HomeController {
 
         String name = principal.getName();
         model.addAttribute("username", name);
-        model.addAttribute("message", "Spring Security Custom Form example");
         return "hello";
 
     }
 
     @RequestMapping(value="/login", method = RequestMethod.GET)
-    public String login(ModelMap model) {
+    public String showLogin(HttpServletRequest request, ModelMap model) {
+        return "login";
+    }
 
+    @RequestMapping(value="/login", method = RequestMethod.POST)
+    public String submitLogin(HttpServletRequest request, ModelMap model) {
         return "login";
 
     }
 
     @RequestMapping(value="/loginfailed", method = RequestMethod.GET)
     public String loginerror(ModelMap model) {
-
-        model.addAttribute("error", "true");
         return "login";
 
     }
