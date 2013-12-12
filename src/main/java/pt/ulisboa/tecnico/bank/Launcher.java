@@ -3,9 +3,11 @@ package pt.ulisboa.tecnico.bank;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import pt.ulisboa.tecnico.bank.domain.Account;
 import pt.ulisboa.tecnico.bank.domain.Roles;
 import pt.ulisboa.tecnico.bank.domain.User;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicatedUserException;
+import pt.ulisboa.tecnico.bank.services.AccountService;
 import pt.ulisboa.tecnico.bank.services.UserService;
 
 import javax.annotation.PostConstruct;
@@ -21,6 +23,9 @@ public class Launcher {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    AccountService accountService;
 
     @Value("#{wiringProperties['admin.username']}")
     private String admin_name;
@@ -48,6 +53,8 @@ public class Launcher {
         try{
             User administrator = userService.createAdminUser(admin_name, admin_password, admin_salt, admin_iterations);
             User user = userService.createNormalUser(user_name, user_password, user_salt, user_iterations);
+            Account account1 = accountService.createNewAccount(user, "PT12345", 200.0);
+            Account account2 = accountService.createNewAccount(user, "PT23456", 1248.35);
         }
         catch (DuplicatedUserException e){
             logger.error(e);

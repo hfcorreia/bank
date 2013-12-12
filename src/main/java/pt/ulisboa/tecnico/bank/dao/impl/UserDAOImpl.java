@@ -8,6 +8,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import pt.ulisboa.tecnico.bank.dao.UserDAO;
+import pt.ulisboa.tecnico.bank.domain.Account;
 import pt.ulisboa.tecnico.bank.domain.User;
 
 @Repository
@@ -42,11 +43,22 @@ public class UserDAOImpl extends HibernateDAO<User> implements UserDAO {
 		return null;
 	}
 
-    @Override
     public List<User> getAllUsers() {
         Session session = sessionFactory.getCurrentSession();
         Criteria cr = session.createCriteria(User.class);
         List<User> results = cr.list();
         return results;
     }
+
+    public List<Account> getUserAccounts(String username) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria crUser = session.createCriteria(User.class);
+        crUser.add(Restrictions.eq("username", username));
+        User user = (User)crUser.uniqueResult();
+
+        Criteria crAccount = session.createCriteria(Account.class);
+        crAccount.add(Restrictions.eq("owner", user));
+        List<Account> results = crAccount.list();
+        return results;
+        }
 }

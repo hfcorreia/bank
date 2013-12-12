@@ -1,5 +1,6 @@
 package pt.ulisboa.tecnico.bank.dao;
 
+import pt.ulisboa.tecnico.bank.domain.Account;
 import pt.ulisboa.tecnico.bank.domain.User;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface UserDAO extends DAO<User> {
     public User createUser(User user);
   
     public List<User> getAllUsers();
+
+    public List<Account> getUserAccounts(String username);
 }
