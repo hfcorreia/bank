@@ -18,5 +18,5 @@ public interface UserDAO extends DAO<User> {
     
     public User createUser(User user);
   
-
+    public List<User> getAllUsers();
 }

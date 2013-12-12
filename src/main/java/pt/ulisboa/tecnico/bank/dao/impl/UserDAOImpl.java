@@ -41,4 +41,12 @@ public class UserDAOImpl extends HibernateDAO<User> implements UserDAO {
 		}
 		return null;
 	}
+
+    @Override
+    public List<User> getAllUsers() {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria cr = session.createCriteria(User.class);
+        List<User> results = cr.list();
+        return results;
+    }
 }
