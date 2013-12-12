@@ -12,6 +12,8 @@ import pt.ulisboa.tecnico.bank.domain.User;
 import pt.ulisboa.tecnico.bank.exceptions.BankException;
 import pt.ulisboa.tecnico.bank.exceptions.DuplicatedUserException;
 
+import java.util.List;
+
 @Service("userService")
 public class UserService {
 
@@ -52,4 +54,9 @@ public class UserService {
 			return user;
 		else throw new DuplicatedUserException(username);
 	}
+
+    @Transactional
+    public List<User> getAllUsers() {
+        return userDAO.getAllUsers();
+    }
 }
