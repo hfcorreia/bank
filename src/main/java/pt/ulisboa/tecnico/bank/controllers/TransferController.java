@@ -82,7 +82,7 @@ public class TransferController {
 		if( ! accountService.checkMatrixInput(accountNumber, row1, col1, num1, matrix1)){
 			modelMap.addAttribute("error", "true");
 			modelMap.addAttribute("errorMSG", "Matrix error value");
-			return "redirect:/transfer";
+			return "transfer";
 		}
 
 		if( ! accountService.checkMatrixInput(accountNumber2, row2, col2, num2, matrix2)){
