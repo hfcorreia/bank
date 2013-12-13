@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@SessionAttributes({"param.error"})
 public class HomeController {
 
     @RequestMapping(value="/welcome", method = RequestMethod.GET)
@@ -28,19 +30,18 @@ public class HomeController {
     
     @RequestMapping(value="/login", method = RequestMethod.GET)
     public String showLogin(HttpServletRequest request, ModelMap model) {
+        if(request.getParameter("param.error") != null){
+            request.getSession().setAttribute("param.error", request.getParameter("param.error"));
+        }
         return "login";
     }
 
     @RequestMapping(value="/login", method = RequestMethod.POST)
     public String submitLogin(HttpServletRequest request, ModelMap model) {
+        if(request.getParameter("param.error") != null){
+            request.getSession().setAttribute("param.error", request.getParameter("param.error"));
+        }
         return "login";
-
-    }
-
-    @RequestMapping(value="/loginfailed", method = RequestMethod.GET)
-    public String loginerror(ModelMap model) {
-        return "login";
-
     }
 
     @RequestMapping(value="/logout", method = RequestMethod.GET)
