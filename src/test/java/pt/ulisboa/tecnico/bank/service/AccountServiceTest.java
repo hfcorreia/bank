@@ -34,7 +34,7 @@ public class AccountServiceTest {
     private static final String ITERATIONS = "10000";
 	private static final Double BALANCE = 200.00;
 	private static final String ACCOUNT_NUM2 = "0002";
-	private static final String MATRIX = new SecurityMatrixUtil(1000).generateJSON();
+	private static final String MATRIX = SecurityMatrixUtil.hashMatrix(SecurityMatrixUtil.generateMatrix(2001), SALT, Integer.parseInt(ITERATIONS));
 
 	@Autowired
 	private UserService userService;

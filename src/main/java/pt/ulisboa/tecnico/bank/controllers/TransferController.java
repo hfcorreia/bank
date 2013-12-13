@@ -79,15 +79,13 @@ public class TransferController {
 		int num1 = Integer.parseInt( new String( session.getSession().getAttribute("num1")  + ""));
 		int num2 = Integer.parseInt( new String( session.getSession().getAttribute("num2")  + ""));
 		
-		int value1 = Integer.parseInt(matrix1);
-		if( ! (value1 == accountService.checkMatrixInput(accountNumber, row1, col1, num1) )){
+		if( ! accountService.checkMatrixInput(accountNumber, row1, col1, num1, matrix1)){
 			modelMap.addAttribute("error", "true");
 			modelMap.addAttribute("errorMSG", "Matrix error value");
 			return "redirect:/transfer";
 		}
 
-		int value2 = Integer.parseInt(matrix2);
-		if( ! (value2 == accountService.checkMatrixInput(accountNumber2, row2, col2, num2) ) ){
+		if( ! accountService.checkMatrixInput(accountNumber2, row2, col2, num2, matrix2)){
 			modelMap.addAttribute("error", "true");
 			modelMap.addAttribute("errorMSG", "Matrix error value");
 			return "transfer";
