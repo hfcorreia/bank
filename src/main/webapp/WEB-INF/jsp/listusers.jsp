@@ -5,6 +5,7 @@
 <body>
     <h2> Users list <h2>
     <p> ${users_list} </p>
-    
+	<a href="<c:url value='/createuser' />">Create an user!</a>
+	<a href="<c:url value='/createaccount' />">Create an account!</a>
 </body>
 </html>

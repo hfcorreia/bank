@@ -54,7 +54,13 @@ public class CreateAccountController {
         }
 
         User user = userService.getUserByUserName(owner);
-        Account account = accountService.createNewAccount(user, "1234567", money);
+        String random = new String( ((int)(Math.random() * 100000) % 1000) + "");
+        if(accountService.checkAccountExistence(random)) {
+        	modelMap.addAttribute("error", true);
+            modelMap.addAttribute("errorMsg", "Duplicate account");
+        	return "createaccount";
+        }
+        Account account = accountService.createNewAccount(user, random , money);
 
         modelMap.addAttribute("success", "Account " + account.getNumber() + " created.");
 

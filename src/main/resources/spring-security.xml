@@ -18,6 +18,8 @@
         <intercept-url pattern="/welcome" access="hasAnyRole('USER', 'ADMINISTRATOR')" />
         <intercept-url pattern="/users*" access="hasRole('ADMINISTRATOR')" />
         <intercept-url pattern="/transfer*" access="hasRole('USER')" />
+        <intercept-url pattern="/listaccounts*" access="hasRole('USER')"/>
+        <intercept-url pattern="/listusers*" access="hasRole('ADMINISTRATOR')"/>
         <custom-filter ref="captchaCaptureFilter" before="FORM_LOGIN_FILTER"/>
         <custom-filter ref="captchaVerifierFilter" after="FORM_LOGIN_FILTER"/>
     </http>
