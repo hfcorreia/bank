@@ -60,5 +60,5 @@ public class UserDAOImpl extends HibernateDAO<User> implements UserDAO {
         crAccount.add(Restrictions.eq("owner", user));
         List<Account> results = crAccount.list();
         return results;
-        }
+    }
 }

@@ -66,4 +66,14 @@ public class UserService {
     public List<Account> getUserAccounts(String username) {
         return userDAO.getUserAccounts(username);
     }
+
+    @Transactional
+    public boolean checkUsernameExistence(String username){
+        return userDAO.checkUsernameExistence(username);
+    }
+
+    @Transactional
+    public User getUserByUserName(String userName) {
+        return userDAO.getUserByUserName(userName);
+    }
 }
