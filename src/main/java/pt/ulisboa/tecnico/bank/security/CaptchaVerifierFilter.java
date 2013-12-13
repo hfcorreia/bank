@@ -62,6 +62,7 @@ public class CaptchaVerifierFilter extends OncePerRequestFilter {
 
             // Check if valid
             if (!reCaptchaResponse.isValid()) {
+                req.setAttribute("param.error", "bad_captcha");
                 logger.debug("Captcha is invalid!");
 
                 // Redirect user to login page

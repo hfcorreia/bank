@@ -10,7 +10,8 @@
     <http auto-config="true" use-expressions="true">
         <form-login login-page="/login"
                     default-target-url="/welcome"
-                    authentication-failure-url="/loginfailed" />
+                    authentication-failure-url="/login?param.error=bad_credentials"
+                    always-use-default-target="true"/>
 
         <logout logout-success-url="/logout" />
         <!--<intercept-url pattern="/login" requires-channel="https" />-->
@@ -34,7 +35,7 @@
           p:useProxy="false"
           p:proxyPort=""
           p:proxyHost=""
-          p:failureUrl="/loginfailed"
+          p:failureUrl="/login?param.error=bad_captcha"
           p:captchaCaptureFilter-ref="captchaCaptureFilter"
           p:privateKey="6LfCqOsSAAAAAN7_zHT3mPU_zd0hkcBJI9CG7zux"/>
 
