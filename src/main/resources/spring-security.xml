@@ -23,7 +23,7 @@
     </http>
 
     <beans:bean id="encoder"
-                class="org.springframework.security.crypto.password.StandardPasswordEncoder">
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
     </beans:bean>
 
     <!-- For capturing CAPTCHA fields -->

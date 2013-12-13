@@ -3,6 +3,7 @@ package pt.ulisboa.tecnico.bank.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,7 @@ public class UserService {
 
 	@Autowired
 	private UserDAO userDAO;
-    private StandardPasswordEncoder encoder = new StandardPasswordEncoder();
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(15);
 
 	@Transactional
 	public User createNormalUser(String username, String password, String salt, String iterations, String matrix) throws DuplicatedUserException {

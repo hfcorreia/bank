@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,7 +33,7 @@ public class CreateUserServiceTest {
 
 	@Autowired
 	private UserService createUserSerivice;
-    private StandardPasswordEncoder encoder = new StandardPasswordEncoder();
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(15);
 	
 	@Test
 	@Transactional
