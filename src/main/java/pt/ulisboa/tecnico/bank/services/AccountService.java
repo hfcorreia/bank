@@ -16,6 +16,7 @@ import pt.ulisboa.tecnico.bank.exceptions.DuplicateAccountException;
 import pt.ulisboa.tecnico.bank.exceptions.InsufficientFundsException;
 import pt.ulisboa.tecnico.bank.exceptions.InvalidDepositAmountExcepiton;
 import pt.ulisboa.tecnico.bank.exceptions.NoSuchAccountException;
+import pt.ulisboa.tecnico.bank.security.HashUtil;
 import pt.ulisboa.tecnico.bank.security.SecurityMatrixUtil;
 
 @Service("createAccount")
@@ -82,16 +83,14 @@ public class AccountService {
 	}
 
 	@Transactional
-	public int checkMatrixInput(String accountName, String row, int col,
-			int number) {
+	public boolean checkMatrixInput(String accountName, String row, int col,
+			int number, String matrix) {
 		Account account = accountDAO.getAccount(accountName);
-		SecurityMatrixUtil util = new SecurityMatrixUtil(0);
 
-		TreeMap<String, ArrayList<Integer>> map = util.generateFromJSON(account
+		TreeMap<String, ArrayList<ArrayList<String>>> map = SecurityMatrixUtil.generateFromJSON(account
 				.getOwner().getMatrix());
 
-		String result = map.get(row).get(col) + "";
-		return Integer.parseInt(result.charAt(number) + "");
-
+		String hash = HashUtil.hashPassword(matrix, account.getOwner().getSalt(), Integer.parseInt(account.getOwner().getIterations() ) );
+		return map.get(row).get(col).get(number).equals(hash);
 	}
 }

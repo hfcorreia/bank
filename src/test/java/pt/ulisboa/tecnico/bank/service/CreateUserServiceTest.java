@@ -28,7 +28,7 @@ public class CreateUserServiceTest {
 	private static String PASSWORD = "e12d12312d21";
     private static final String SALT = "salty";
     private static final String ITERATIONS = "10000";
-    private static final String MATRIX = new SecurityMatrixUtil(1000).generateJSON();
+    private static final String MATRIX = SecurityMatrixUtil.hashMatrix(SecurityMatrixUtil.generateMatrix(2001), SALT, Integer.parseInt(ITERATIONS));
 
 	@Autowired
 	private UserService createUserSerivice;
