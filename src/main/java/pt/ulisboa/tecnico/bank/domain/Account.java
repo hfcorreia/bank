@@ -3,7 +3,12 @@ package pt.ulisboa.tecnico.bank.domain;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,27 +21,34 @@ import javax.persistence.Table;
 @Table(name="account")
 public class Account extends DomainObject {
 
-    @Column(name = "user_id")
-    private String owner;
+	@NotNull
+	@ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "ownerAccount", referencedColumnName="id")
+    private User owner;
 
-    @Column(name = "number")
+	@NotNull
+    @Column(name = "number", unique=true)
     private String number;
 
+	@NotNull
     @Column(name = "balance")
     private Double balance;
 
+	@NotNull
     @Column(name = "currency")
+    @Enumerated(EnumType.STRING)
     private Currencies currency;
 
+	@NotNull
     @Column(name = "blocked")
     private Boolean isBlocked;
 
 
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 

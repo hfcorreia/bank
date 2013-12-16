@@ -1,12 +1,22 @@
 package pt.ulisboa.tecnico.bank.domain;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.security.core.GrantedAuthority;
+
 /**
- * Created with IntelliJ IDEA.
- * Author: Aliaksandra Sankova
- * Date: 11/29/13
- * Time: 2:47 AM
+ * Created by Aliaksandra Sankova on 12/11/13.
  */
-public class Role extends DomainObject {
+@Entity
+@Table(name = "roles")
+public class Role extends DomainObject implements GrantedAuthority {
+    @NotNull
+    @Size(max = 50)
+    @Column(unique = true)
     private String name;
 
     public String getName() {
@@ -42,4 +52,7 @@ public class Role extends DomainObject {
                 '}';
     }
 
+    public String getAuthority() {
+        return name;
+    }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="genTemplate" template="/jsp/layout.jsp">
+        <put-attribute name="header" value="/jsp/header.jsp"/>
+        <!--<put-attribute name="main" value="/jsp/home_body.jsp"/>-->
+        <put-attribute name="footer" value="/jsp/footer.jsp"/>
+    </definition>
+    <definition name="login" extends="genTemplate">
+        <put-attribute name="main" value="/jsp/login.jsp"/>
+    </definition>
+
+</tiles-definitions>

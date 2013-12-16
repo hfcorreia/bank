@@ -1,15 +1,16 @@
 package pt.ulisboa.tecnico.bank.cron;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.quartz.QuartzJobBean;
+
 import pt.ulisboa.tecnico.bank.domain.Notification;
 import pt.ulisboa.tecnico.bank.services.NotificationService;
-
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

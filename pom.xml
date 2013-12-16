@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>bank</groupId>
     <artifactId>bank</artifactId>
     <version>1.0-SNAPSHOT</version>
-	<name>Bank</name>
+    <packaging>war</packaging>
+    <name>Bank</name>
 
-	<repositories>
+    <repositories>
         <repository>
             <id>MavenRepo</id>
             <name>Maven Repository</name>
@@ -20,10 +21,12 @@
             <name>Spring Maven Repository</name>
             <url>http://maven.springframework.org/milestone</url>
         </repository>
-	</repositories>
+    </repositories>
 
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>3.1.0.RELEASE</spring.version>
+        <jboss.home>${env.JBOSS_HOME}</jboss.home>
     </properties>
 
     <dependencies>
@@ -44,6 +47,11 @@
             <artifactId>hibernate-annotations</artifactId>
             <version>3.5.3-Final</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>4.2.0.Final</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -127,6 +135,24 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.3</version>
@@ -170,6 +196,42 @@
             <version>3.8.0.GA</version>
             <scope>compile</scope>
         </dependency>
-    </dependencies>
-		
+        
+        <dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.9.5</version>
+		</dependency>
+        <dependency>
+            <groupId>net.tanesha.recaptcha4j</groupId>
+            <artifactId>recaptcha4j</artifactId>
+            <version>0.0.7</version>
+        </dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+	</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <filteringDeploymentDescriptors>true</filteringDeploymentDescriptors>
+                    <warName>${plugin.war.warName}</warName>
+                    <outputDirectory>${jboss.home}/standalone/deployments</outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

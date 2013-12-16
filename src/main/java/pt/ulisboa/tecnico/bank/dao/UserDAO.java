@@ -1,8 +1,9 @@
 package pt.ulisboa.tecnico.bank.dao;
 
-import pt.ulisboa.tecnico.bank.domain.User;
-
 import java.util.List;
+
+import pt.ulisboa.tecnico.bank.domain.Account;
+import pt.ulisboa.tecnico.bank.domain.User;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,17 +15,11 @@ public interface UserDAO extends DAO<User> {
 
     public User getUserByUserName (String userName);
 
-    public List<User> getUsersByRoleName(String roleName);
+    public boolean checkUsernameExistence(String userName);
+    
+    public User createUser(User user);
+  
+    public List<User> getAllUsers();
 
-    public Long sizeByRoleName(String roleName);
-
-    public boolean contains (String email);
-
-    public List<User> listByRoleName(int first, int count, String roleName);
-
-    public boolean checkUsernameExistence(String userName, Long userId);
-
-    public boolean checkEmailExistence(String email, Long userId);
-
-    public void evict(User user);
+    public List<Account> getUserAccounts(String username);
 }

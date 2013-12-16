@@ -7,5 +7,5 @@ package pt.ulisboa.tecnico.bank.domain;
  * Time: 2:53 AM
  */
 public enum Roles {
-    USER, ADMIN
+    USER, ADMINISTRATOR
 }

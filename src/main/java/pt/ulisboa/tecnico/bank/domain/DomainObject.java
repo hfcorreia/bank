@@ -1,7 +1,12 @@
 package pt.ulisboa.tecnico.bank.domain;
 
-import javax.persistence.*;
 import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
  * Created with IntelliJ IDEA.
